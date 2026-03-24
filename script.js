@@ -126,3 +126,37 @@ const chuckNorrisQuiz = [
   }
 ];
 
+// Generatore di interi casuali
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const NUM = 5;
+let questionIndexes = [];
+for (let i = 0; i < NUM;){
+    let n = getRandomInt(0,chuckNorrisQuiz.length - 1);
+    if (!questionIndexes.includes(n)){
+        questionIndexes.push(n);
+        i++;
+    }
+}
+
+let step = 0;
+let answers = 0;
+
+window.addEventListener("load", function() {
+    const quiz = document.querySelector("#quiz-screen");
+    quiz.classList.add("hidden");
+    const results = document.querySelector("#results-screen");
+    results.classList.add("hidden");
+    const startButton = document.querySelector("#start-button");
+    const start = document.querySelector("#start-screen");
+    startButton.addEventListener("click", function() {
+        start.classList.add("hidden");
+        quiz.classList.remove("hidden");
+        loadQuestion();
+        step++;
+    });
+});
+
+
