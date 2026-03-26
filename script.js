@@ -142,16 +142,17 @@ for (let i = 0; i < NUM;){
 }
 
 let step = 0;
-let answers = 0;
+let questionNumber = 0;
+let punteggio = 0;
 
-window.addEventListener("load", function() {
+window.addEventListener("load", () => {
     const quiz = document.querySelector("#quiz-screen");
     quiz.classList.add("hidden");
-    const results = document.querySelector("#results-screen");
+    const results = document.querySelector("#result-screen");
     results.classList.add("hidden");
-    const startButton = document.querySelector("#start-button");
+    const startButton = document.querySelector("#start-btn");
     const start = document.querySelector("#start-screen");
-    startButton.addEventListener("click", function() {
+    startButton.addEventListener("click", () => {
         start.classList.add("hidden");
         quiz.classList.remove("hidden");
         loadQuestion();
@@ -159,4 +160,52 @@ window.addEventListener("load", function() {
     });
 });
 
+function loadQuestion(){
+  // Caricare la domanda chuckNorrisQuiz[questionIndexes[questionNumber]]
+  const question = chuckNorrisQuiz[questionIndexes[questionNumber]];
+  let number = document.querySelector("#number");
+  number.innerText = `Domanda ${questionNumber + 1} di ${NUM}`;
+  let q = document.querySelector("#question");
+  q.innerText = question.question;
+  let choices = document.querySelector("#choices");
+  while(choices.firstChild) {
+    choices.removeChild(choices.firstChild);
+  }
+  let opt_list = document.createElement("ul");
+  question.answers.forEach((e) => {
+    let c = document.createElement("li");
+    c.innerHTML = `<input type="radio" name="q${questionNumber}" value="${e}"> ${e}`;
+    opt_list.appendChild(c);
+  });
+  choices.appendChild(opt_list);
+  let next = document.querySelector("#next");
+  while(next.firstChild) {
+    next.removeChild(next.firstChild);
+  }
+  let btn = document.createElement("button");
+  btn.innerText = "Prossima domanda";
+  btn.addEventListener("click", () => {
+    // Recuperare la risposta selezionata
+    let selected = document.querySelector(`input[name="q${questionNumber}"]:checked`);
+    if (selected) {
+      if (selected.value === question.ans) {
+        punteggio++;
+      }
+      if (questionNumber === NUM - 1) {
+        mostraRisultati();
+      } else {
+        questionNumber++;
+        loadQuestion();
+      }
+    } else {
+      alert("Non hai risposto");
+    }
+  });
+  next.appendChild(btn);
+}
+
+
+function mostraRisultati(){
+
+}
 
