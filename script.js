@@ -206,6 +206,14 @@ function loadQuestion(){
 
 
 function mostraRisultati(){
-
+  const quiz = document.querySelector("#quiz-screen");
+  quiz.classList.add("hidden");
+  const score = document.querySelector("#score");
+  score.innerText = `Punteggio conseguito: ${punteggio}`;
+  const results = document.querySelector("#result-screen");
+  results.classList.remove("hidden");
+  const restart = document.querySelector("#restart-btn");
+  restart.addEventListener('click', () => {
+    window.location.reload();
+  });
 }
-
